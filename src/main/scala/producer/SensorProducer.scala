@@ -1,0 +1,5 @@
+package producer
+
+class SensorProducer {
+
+}

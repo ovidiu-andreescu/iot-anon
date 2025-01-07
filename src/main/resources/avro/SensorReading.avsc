@@ -1,0 +1,117 @@
+{
+  "type": "record",
+  "name": "SensorReading",
+  "namespace": "com.example.models",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "serialNumber",
+      "type": "string"
+    },
+    {
+      "name": "sensorType",
+      "type": "string"
+    },
+    {
+      "name": "model",
+      "type": "string"
+    },
+    {
+      "name": "userId",
+      "type": "string"
+    },
+    {
+      "name": "location",
+      "type": "string"
+    },
+    {
+      "name": "unitModel",
+      "type": [
+        {
+          "type": "record",
+          "name": "AirQuality",
+          "fields": [
+            { "name": "co2Level", "type": "double" },
+            { "name": "vocLevel", "type": "double" },
+            { "name": "unit",     "type": "string" }
+          ]
+        },
+        {
+          "type": "record",
+          "name": "Humidity",
+          "fields": [
+            { "name": "value", "type": "double" },
+            { "name": "unit",  "type": "string" }
+          ]
+        },
+        {
+          "type": "record",
+          "name": "LightIntensity",
+          "fields": [
+            { "name": "value", "type": "double" },
+            { "name": "unit",  "type": "string" }
+          ]
+        },
+        {
+          "type": "record",
+          "name": "Motion",
+          "fields": [
+            { "name": "detected",   "type": "boolean" },
+            { "name": "timestamp",  "type": "long" }
+          ]
+        },
+        {
+          "type": "record",
+          "name": "Temperature",
+          "fields": [
+            { "name": "value", "type": "double" },
+            { "name": "unit",  "type": "string" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "default": "active"
+    },
+    {
+      "name": "lastUpdated",
+      "type": "long",
+      "default": 0
+    },
+    {
+      "name": "batteryLevel",
+      "type": ["null", "double"],
+      "default": null
+    },
+    {
+      "name": "connectivity",
+      "type": "string",
+      "default": "online"
+    },
+    {
+      "name": "manufacturer",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "firmwareVersion",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "createdAt",
+      "type": "long",
+      "default": 0
+    },
+    {
+      "name": "updatedAt",
+      "type": "long",
+      "default": 0
+    }
+  ]
+}

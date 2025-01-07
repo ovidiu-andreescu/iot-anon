@@ -1,0 +1,58 @@
+version: "3"
+services:
+  spark-master:
+    image: spark-master:latest
+    container_name: spark-master
+    ports:
+      - "4040:4040"  # Spark Web UI
+      - "8080:8080"  # Alternate port for web app
+      - "7077:7077"  # Spark Master Port
+    volumes:
+      - ./apps:/opt/spark-apps
+      - ./data:/opt/spark-data
+    environment:
+      - SPARK_LOCAL_IP=spark-master
+      - SPARK_MASTER_HOST=spark-master
+
+  spark-worker:
+    image: spark-worker:latest
+    container_name: spark-worker
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=128m
+      - SPARK_EXECUTOR_MEMORY=256m
+    volumes:
+      - ./apps:/opt/spark-apps
+      - ./data:/opt/spark-data
+
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: kafka
+    hostname: kafka
+    ports:
+      - "9092:9092"  # Kafka Broker Port
+      - "9093:9093"  # Kafka Controller Port (KRaft)
+    environment:
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,CONTROLLER://kafka:9093
+      - KAFKA_CFG_LOG_DIRS=/opt/bitnami/kafka/data
+      - KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1
+      - KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR=1
+      - ALLOW_PLAINTEXT_LISTENER=yes
+#    volumes:
+#      - kafka-data:/opt/bitnami/kafka/data
+
+volumes:
+  kafka-data:
+    driver: local
