@@ -26,6 +26,11 @@ lazy val root = (project in file("."))
       "org.apache.spark" %% "spark-sql" % "3.5.4",
       "org.apache.spark" %% "spark-avro" % "3.5.4",
       "org.apache.kafka" %% "kafka-streams-scala" % "3.9.0",
+      "io.prometheus" % "client" % "0.0.10",
+      "io.prometheus" % "simpleclient" % "0.16.0",
+      "io.prometheus" % "simpleclient_pushgateway" % "0.16.0",
+      "io.prometheus" % "simpleclient_hotspot" % "0.16.0",
+      "org.dmonix" %% "prometheus-client-scala" % "1.2.0",
       "io.confluent" % "kafka-avro-serializer" % "7.8.0",
       "com.typesafe" % "config" % "1.4.3",
     )

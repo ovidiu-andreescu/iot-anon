@@ -14,6 +14,8 @@ class DevicesByTypeAggJob(inputPath: String, outputPath: String) {
       devicesByTypeDf.write
         .mode("overwrite")
         .parquet(outputPath)
+
+      devicesByTypeDf.show()
     } catch {
       case e: Exception =>
         println(s"Error running DevicesByTypeAggJob: ${e.getMessage}")

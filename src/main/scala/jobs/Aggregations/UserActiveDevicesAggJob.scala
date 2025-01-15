@@ -14,6 +14,7 @@ class UserActiveDevicesAggJob(inputPath: String, outputPath: String) {
       activeDevicesDf.write
         .mode("overwrite")
         .parquet(outputPath)
+      activeDevicesDf.show()
     } catch {
       case e: Exception =>
         println(s"Error running UserActiveDevicesAggJob: ${e.getMessage}")

@@ -5,12 +5,12 @@ import org.apache.spark.sql.functions.count
 import utils.SparkConfig.sparkSession
 
 class DeviceConnectivityAggJob(inputPath: String, outputPath: String) {
-
   def run(): Unit = {
     try {
       val sensorDf = sparkSession.read.parquet(inputPath)
       val connectivityDf = DeviceConnectivityAggJob.computeConnectivityStats(sensorDf)
 
+      connectivityDf.show()
       connectivityDf.write
         .mode("overwrite")
         .parquet(outputPath)
